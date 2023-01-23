@@ -4,3 +4,13 @@
   padding: 2rem;
   text-align: center;
 }
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.buttonContainer > * {
+  margin: 5px;
+}

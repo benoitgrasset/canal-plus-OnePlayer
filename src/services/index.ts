@@ -1,7 +1,11 @@
-export const getCallAPI = async (timecode: number) => {
-  const url = `scene/${timecode}`;
+import { Scene } from '../types';
 
-  const response: Promise<unknown> = await fetch(url)
+const baseUrl = 'https://teamplayer.ddns.net:32783/';
+
+export const getScene = async (timecode: number) => {
+  const url = `${baseUrl}/scene/${timecode}`;
+
+  const response: Promise<Scene> = await fetch(url)
     .then((res) => res.json())
     .catch((error) => console.error(error.message));
 

@@ -1,10 +1,12 @@
-import { FC, useRef } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { FC, useEffect, useRef } from 'react';
 import RxPlayer from 'rx-player';
 import './App.css';
 import PauseIcon from './assets/pause.svg';
 import PlayIcon from './assets/play-filled.svg';
 import StopIcon from './assets/stop-filled.svg';
 import Button from './components/Button';
+import { getScene } from './services';
 import { State } from './types';
 
 const options = {
@@ -17,7 +19,6 @@ const options = {
 };
 
 const App: FC = () => {
-  const playerWrapperElement = useRef(null);
   const videoElementRef = useRef(null);
 
   const player = new RxPlayer({
@@ -25,30 +26,31 @@ const App: FC = () => {
     videoElement: videoElementRef.current!,
   });
 
+  const videoElement = player.getVideoElement();
+  const state = player.getPlayerState() as State;
+  const position = player.getPosition();
+
+  const { data: sceneDetails } = useQuery([`scene - ${position}`], () =>
+    getScene(position)
+  );
+
   player.loadVideo({
     url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
     transport: 'directfile',
     autoPlay: false,
   });
 
-  const videoElement = player.getVideoElement();
-
-  player.addEventListener('error', (err) => {
+  const errorListenerCallback = (err: Error) => {
     console.error('the content stopped with the following error', err);
-  });
+  };
 
-  player.addEventListener('playerStateChange', (state: string) => {
-    if ((state as State) === 'LOADED') {
-      // toggle between play and pause when the user clicks on the video
-      videoElement!.onclick = function () {
-        if (player.getPlayerState() === 'PLAYING') {
-          player.pause();
-        } else {
-          player.play();
-        }
-      };
-    }
-  });
+  useEffect(() => {
+    player.addEventListener('error', errorListenerCallback);
+
+    return () => {
+      player.removeEventListener('error', errorListenerCallback);
+    };
+  }, []);
 
   const handleClickPlayPause = () => {
     if (player.getPlayerState() === 'PLAYING') {
@@ -62,21 +64,39 @@ const App: FC = () => {
     player.stop();
   };
 
+  const listenerCallback = (state: string) => {
+    if ((state as State) === 'LOADED') {
+      videoElement!.onclick = function () {
+        handleClickPlayPause();
+      };
+    }
+  };
+
+  useEffect(() => {
+    player.addEventListener('playerStateChange', listenerCallback);
+
+    return () => {
+      player.removeEventListener('playerStateChange', listenerCallback);
+    };
+  }, []);
+
   const PlayPauseIcon =
-    player.getPlayerState() === 'PLAYING' ? PlayIcon : PauseIcon;
+    player.getPlayerState() === 'PLAYING' ? PauseIcon : PlayIcon;
 
   return (
     <div className="App">
-      <h1>OnePlayer - Canal +</h1>
-      <div ref={playerWrapperElement}>
+      <h2>OnePlayer - Canal +</h2>
+      <div>
         <video ref={videoElementRef} />
       </div>
-      <Button onClick={handleClickPlayPause}>
-        <img src={PlayPauseIcon} alt="play" width={30} />
-      </Button>
-      <Button onClick={handleClickStop}>
-        <img src={StopIcon} alt="stop" width={30} />
-      </Button>
+      <div className="buttonContainer">
+        <Button onClick={handleClickPlayPause}>
+          <img src={PlayPauseIcon} alt="play" width={30} />
+        </Button>
+        <Button onClick={handleClickStop}>
+          <img src={StopIcon} alt="stop" width={30} />
+        </Button>
+      </div>
     </div>
   );
 };

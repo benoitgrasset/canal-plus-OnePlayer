@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import '../index.css';
+import '../App.css';
 
 type Props = React.ComponentPropsWithoutRef<'button'>;
 
