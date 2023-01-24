@@ -20,4 +20,4 @@ GET https://teamplayer.ddns.net:32783/scene/{timecode}.
 
 ## Deploiement
 
-Déployé avec github-pages sur: https://benoitgrasset.github.io/canal-plus-OnePlayer
+Déployé avec netlify sur: https://canal-plus-oneplayer.netlify.app
