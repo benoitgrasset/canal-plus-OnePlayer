@@ -1,5 +1,15 @@
 # OnePlayer - Canal +
 
+## Executer le projet
+
+- cloner le repo
+
+```
+cd canal-plus-OnePlayer
+npm install
+npm run dev
+```
+
 ## Stack technique
 
 - ReactJS
