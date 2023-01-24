@@ -59,6 +59,7 @@ video {
 
 input {
   cursor: pointer;
+  accent-color: #1a1a1a;
 }
 
 @media (prefers-color-scheme: light) {

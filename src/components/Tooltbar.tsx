@@ -41,12 +41,12 @@ const Toolbar: FC<Props> = ({ player, handleClickPlayPause }) => {
     player.stop();
   };
 
-  const handleStateChange = () => {
+  const handlePlayerStateChange = () => {
     const playerState = player.getPlayerState() as State;
     setPlayerState(playerState);
   };
 
-  const PlayPauseIcon = playerState === 'PLAYING' ? PauseIcon : PlayIcon;
+  const PlayPauseIcon = playerState === 'PLAYING' ? PlayIcon : PauseIcon;
 
   return (
     <>
@@ -65,7 +65,7 @@ const Toolbar: FC<Props> = ({ player, handleClickPlayPause }) => {
           <Button
             onClick={() => {
               handleClickPlayPause();
-              handleStateChange();
+              handlePlayerStateChange();
             }}
           >
             <img src={PlayPauseIcon} alt="play" width={width} />
