@@ -9,14 +9,40 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+
+  /* height: 40px;
+  width: 60px; */
 }
 
 .buttonContainer {
   display: flex;
   flex-direction: row;
+  justify-content: center;
   align-items: center;
 }
 
 .buttonContainer > * {
   margin: 5px 10px 0 0;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.wrapper > * {
+  margin-right: 5px;
+}
+
+.toolbar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.positionControl {
+  width: 100%;
 }

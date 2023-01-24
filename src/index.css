@@ -48,16 +48,16 @@ button {
   transition: border-color 0.25s;
 }
 
-button:hover {
-  border-color: #646cff;
-}
-
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
 video {
+  cursor: pointer;
+}
+
+input {
   cursor: pointer;
 }
 
@@ -73,5 +73,9 @@ video {
 
   button {
     background-color: #ccc;
+  }
+
+  button:hover {
+    background-color: rgb(129 129 129);
   }
 }
