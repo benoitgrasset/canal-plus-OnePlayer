@@ -2,9 +2,8 @@
 
 ## Executer le projet
 
-- cloner le repo
-
 ```
+git clone https://github.com/benoitgrasset/canal-plus-OnePlayer.git
 cd canal-plus-OnePlayer
 npm install
 npm run dev
