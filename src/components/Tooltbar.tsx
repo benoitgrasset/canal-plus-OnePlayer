@@ -5,7 +5,9 @@ import PauseIcon from '../assets/pause.svg';
 import PlayIcon from '../assets/play-filled.svg';
 import VolumeIcon from '../assets/volume.svg';
 
+import { useQuery } from '@tanstack/react-query';
 import StopIcon from '../assets/stop-filled.svg';
+import { getScene } from '../services';
 import { State } from '../types';
 import { formatTime } from '../utils';
 import Button from './Button';
@@ -21,9 +23,12 @@ type Props = {
 const Toolbar: FC<Props> = ({ player, handleClickPlayPause }) => {
   const [volume, setVolume] = useState(1);
   const [position, setPosition] = useState(0);
+  const [show, setShow] = useState(false);
   const [playerState, setPlayerState] = useState<State | undefined>(undefined);
 
   const duration = player.getVideoDuration() || 0;
+
+  const { data: movieDetails } = useQuery(['movie'], () => getScene(position));
 
   const handleChangeVolume = (event: React.ChangeEvent<HTMLInputElement>) => {
     const volume = Number(event.target.value) / MaxVolume;
@@ -44,6 +49,14 @@ const Toolbar: FC<Props> = ({ player, handleClickPlayPause }) => {
   const handlePlayerStateChange = () => {
     const playerState = player.getPlayerState() as State;
     setPlayerState(playerState);
+  };
+
+  const handleMouseOver = () => {
+    setShow(true);
+  };
+
+  const handleMouseLeave = () => {
+    setShow(false);
   };
 
   const PlayPauseIcon = playerState === 'PLAYING' ? PlayIcon : PauseIcon;
@@ -73,7 +86,11 @@ const Toolbar: FC<Props> = ({ player, handleClickPlayPause }) => {
           <Button onClick={handleClickStop}>
             <img src={StopIcon} alt="stop" width={width} />
           </Button>
-          <span>{`${formatTime(position)} / ${formatTime(duration)}`}</span>
+          <span
+            onMouseOver={handleMouseOver}
+            onMouseLeave={handleMouseLeave}
+          >{`${formatTime(position)} / ${formatTime(duration)}`}</span>
+          {show && <span>{`(${movieDetails?.title})`}</span>}
         </div>
         <span className="wrapper">
           <label htmlFor="volume">

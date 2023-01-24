@@ -3,12 +3,12 @@
 ## Stack technique
 
 - ReactJS
-- vite
-- react-query
+- vite (bundler)
+- react-query (cache, appels de services, ....)
 - typescript
 - rx-player
-- prettier
-- stylelint
+- prettier (linter)
+- stylelint (css linter)
 
 ## URL du film
 
