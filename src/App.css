@@ -11,6 +11,12 @@
   justify-content: center;
 }
 
+.buttonContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 .buttonContainer > * {
-  margin: 5px;
+  margin: 5px 10px 0 0;
 }

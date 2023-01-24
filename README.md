@@ -2,7 +2,13 @@
 
 ## Stack technique
 
-ReactJS, Vite, react-query, typescript, rx-player, prettier, stylelint
+- ReactJS
+- vite
+- react-query
+- typescript
+- rx-player
+- prettier
+- stylelint
 
 ## URL du film
 
